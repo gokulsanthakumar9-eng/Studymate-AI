@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StudyMate AI</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark">
+
+  <!-- Login screen -->
+  <section id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="brand">
+        <div class="brand-icon">✨</div>
+        <span>StudyMate AI</span>
+      </div>
+      <p class="muted">Sign in to keep learning where you left off.</p>
+      <input id="login-name" type="text" placeholder="Your name" />
+      <input type="email" placeholder="Email" />
+      <input type="password" placeholder="Password" />
+      <button id="login-btn" class="btn-primary full">Continue</button>
+      <button id="login-google-btn" class="btn-outline full">Continue with Google</button>
+      <p class="tiny muted center">Demo login — no account is created.</p>
+    </div>
+  </section>
+
+  <!-- App shell -->
+  <div id="app" class="app hidden">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✨</div>
+        <span>StudyMate AI</span>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard">📊 Dashboard</button>
+        <button class="nav-item" data-view="chat">💬 AI Chat</button>
+        <button class="nav-item" data-view="notes">📝 Smart Notes</button>
+        <button class="nav-item" data-view="quiz">🧠 Quiz Generator</button>
+        <button class="nav-item" data-view="settings">⚙️ Settings</button>
+      </nav>
+
+      <div id="chat-sidebar" class="chat-sidebar hidden">
+        <button id="new-chat-btn" class="btn-primary full small">+ New chat</button>
+        <div class="label">Recent</div>
+        <div id="chat-list" class="chat-list"></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="theme-toggle" class="nav-item">🌙 Light mode</button>
+        <div class="profile-row">
+          <div id="avatar" class="avatar">S</div>
+          <span id="user-name" class="profile-name">Student</span>
+          <button id="logout-btn" title="Log out" class="icon-btn">⏻</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile nav -->
+    <nav class="mobile-nav">
+      <button class="mnav-item active" data-view="dashboard">📊</button>
+      <button class="mnav-item" data-view="chat">💬</button>
+      <button class="mnav-item" data-view="notes">📝</button>
+      <button class="mnav-item" data-view="quiz">🧠</button>
+      <button class="mnav-item" data-view="settings">⚙️</button>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main">
+
+      <!-- Dashboard -->
+      <section id="view-dashboard" class="view">
+        <div class="page">
+          <h1>Welcome back, <span id="dash-name">Student</span> 👋</h1>
+          <p class="muted">Pick up where you left off, or start something new.</p>
+
+          <div class="stat-grid">
+            <div class="stat-card"><div class="stat-value" id="stat-chats">1</div><div class="stat-label">Total chats</div></div>
+            <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Notes saved</div></div>
+            <div class="stat-card"><div class="stat-value">2</div><div class="stat-label">Quizzes taken</div></div>
+            <div class="stat-card"><div class="stat-value">4 days</div><div class="stat-label">Study streak</div></div>
+          </div>
+
+          <div class="action-grid">
+            <button class="action-card" data-view="chat"><div class="action-icon">💬</div><div class="action-title">Ask a question</div><div class="action-desc">Get help on any subject</div></button>
+            <button class="action-card" data-view="notes"><div class="action-icon">📝</div><div class="action-title">Generate notes</div><div class="action-desc">Turn any topic into a study sheet</div></button>
+            <button class="action-card" data-view="quiz"><div class="action-icon">🧠</div><div class="action-title">Take a quiz</div><div class="action-desc">Test yourself and track progress</div></button>
+          </div>
+
+          <div class="label">Popular subjects</div>
+          <div class="chip-row" id="subject-chips"></div>
+        </div>
+      </section>
+
+      <!-- Chat -->
+      <section id="view-chat" class="view hidden chat-view">
+        <div id="chat-messages" class="chat-messages">
+          <div class="chat-empty">
+            <div class="chat-empty-icon">✨</div>
+            <p class="muted">Ask about any subject — math, code, science, and more.</p>
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <div class="chat-input-wrap">
+            <textarea id="chat-input" rows="1" placeholder="Ask StudyMate anything…"></textarea>
+            <button id="chat-send" class="send-btn">➤</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notes -->
+      <section id="view-notes" class="view hidden">
+        <div class="page">
+          <h1>Smart Notes</h1>
+          <p class="muted">Type a topic and get a full study sheet.</p>
+          <div class="input-row">
+            <input id="notes-topic" type="text" placeholder="e.g. Binary Search Trees" />
+            <button id="notes-generate" class="btn-primary">✨ Generate</button>
+          </div>
+          <div id="notes-output" class="output-card hidden"></div>
+        </div>
+      </section>
+
+      <!-- Quiz -->
+      <section id="view-quiz" class="view hidden">
+        <div class="page">
+          <h1>Quiz Generator</h1>
+          <p class="muted">Test yourself on any topic.</p>
+          <div class="input-row">
+            <input id="quiz-topic" type="text" placeholder="e.g. Newton's Laws of Motion" />
+            <button id="quiz-generate" class="btn-primary">🧠 Generate</button>
+          </div>
+          <div id="quiz-output"></div>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section id="view-settings" class="view hidden">
+        <div class="page narrow">
+          <h1>Settings</h1>
+          <div class="output-card">
+            <div class="profile-row">
+              <div class="avatar big" id="avatar-big">S</div>
+              <div>
+                <div id="settings-name" class="profile-name">Student</div>
+                <div class="tiny muted">Demo profile</div>
+              </div>
+            </div>
+          </div>
+          <div class="output-card">
+            <div class="label">Explanation level</div>
+            <div class="chip-row" id="level-buttons">
+              <button class="pill" data-level="Beginner">Beginner</button>
+              <button class="pill active" data-level="Intermediate">Intermediate</button>
+              <button class="pill" data-level="Advanced">Advanced</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
