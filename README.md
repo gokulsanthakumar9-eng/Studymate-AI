@@ -1,4 +1,4 @@
-# StudyMate AI — vanilla HTML/CSS/JS version
+# StudyMate AI —  version
 
 A plain HTML/CSS/JS build of StudyMate AI — no framework, no build step. Open `index.html` in a browser and it runs.
 
